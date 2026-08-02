@@ -3,10 +3,10 @@
 | รายการ | ข้อมูล |
 |---|---|
 | รายวิชา | ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์ |
-| รหัสนักศึกษา | STUDENT-ID |
-| ชื่อ-นามสกุล | ชื่อ-นามสกุล |
-| Section | SEC-X |
-| GitHub Username | GITHUB-USERNAME |
-| Repository | `engse203-student-labs-STUDENT-ID` |
-
-> ไฟล์นี้จะถูกปรับข้อมูลเมื่อรัน `npm run setup`
+| รหัสนักศึกษา | 685432100608 |
+| ชื่อ-นามสกุล | กมลวรรณ เรณู |
+| Section | SEC1 |
+| GitHub Username | kamonwan-reanu |
+| Repository | `engse203-student-labs-685432100608` |
+| Mode | `migration` |
+| Pages Hub | https://kamonwan-reanu.github.io/engse203-student-labs-685432100608/ |
