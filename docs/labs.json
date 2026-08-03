@@ -34,18 +34,18 @@
   {
     "week": "week-03",
     "title": "Responsive Web UI & Form Interaction",
-    "status": "draft",
-    "sourceOrigin": "course-starter",
-    "originalRepoUrl": "",
-    "originalCommit": "",
+    "status": "ready",
+    "sourceOrigin": "migrated-repository",
+    "originalRepoUrl": "https://github.com/kamonwan-reanu/engse203-student-labs-68543210060-8",
+    "originalCommit": "a803efd",
     "pullRequestUrl": "",
     "submissionTag": "",
-    "testStatus": "not-tested",
+    "testStatus": "pass",
     "notes": "Static site ต้องมี index.html ที่ publish root",
     "pageUrl": "https://kamonwan-reanu.github.io/engse203-student-labs-685432100608/labs/week-03/",
     "sourceUrl": "https://github.com/kamonwan-reanu/engse203-student-labs-685432100608/tree/lab/week-03/labs/week-03/source",
     "hasPublish": false,
-    "sourceEntries": 0
+    "sourceEntries": 6
   },
   {
     "week": "week-04",
