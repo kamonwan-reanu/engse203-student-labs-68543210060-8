@@ -15,7 +15,10 @@ function DashboardPage() {
   const [loadState, setLoadState] = useState('idle');
   const [requests, setRequests] = useState([]);
   const [statusFilter, setStatusFilter] = useState('all');
-  // TODO B2: เพิ่ม state สำหรับข้อความค้นหา ที่นี่
+
+  // TODO B2 / CP-B2.1: เพิ่ม state สำหรับข้อความค้นหา ที่นี่
+  const [searchQuery, setSearchQuery] = useState('');
+
   const [errorMessage, setErrorMessage] = useState('');
   const [notice, setNotice] = useState('');
 
@@ -42,6 +45,7 @@ function DashboardPage() {
   }, [scenario, reloadKey]);
 
   // FIX บั๊ก 2: เปลี่ยน status === 'completed' เป็น 'pending' และใช้ toLowerCase()
+  // CP-B2.4: แผงสรุปคำนวณจาก requests ทั้งหมดเสมอ (ไม่เปลี่ยนตามการค้นหา)
   const summary = useMemo(() => ({
     total: requests.length,
     pending: requests.filter((request) => request.status?.toLowerCase() === 'pending').length,
@@ -50,9 +54,16 @@ function DashboardPage() {
   }), [requests]);
 
   // FIX บั๊ก 3: เปลี่ยนจาก !== เป็น === เพื่อให้กรองรายการที่ตรงกับ statusFilter
-  const filteredRequests = statusFilter === 'all'
-    ? requests
-    : requests.filter((request) => request.status?.toLowerCase() === statusFilter.toLowerCase());
+  // CP-B2.2 & CP-B2.3: กรองข้อมูลทั้งตามสถานะ และ ข้อความค้นหา (requesterName หรือ details)
+  const filteredRequests = requests.filter((request) => {
+    const matchesStatus = statusFilter === 'all' || request.status?.toLowerCase() === statusFilter.toLowerCase();
+    
+    const query = searchQuery.toLowerCase();
+    const matchesSearch = (request.requesterName?.toLowerCase().includes(query) ?? false) ||
+                          (request.details?.toLowerCase().includes(query) ?? false);
+
+    return matchesStatus && matchesSearch;
+  });
 
   function handleRetry() {
     if (scenario) setSearchParams({});
@@ -70,13 +81,14 @@ function DashboardPage() {
     }
   }
 
-  // FIX บั๊ก 6: เติม await หน้านำ resetRequests() เพราะมันคืนค่าเป็น Promise
+  // FIX บั๊ก 6: เติม await หน้า resetRequests() เพราะมันคืนค่าเป็น Promise
   async function handleReset() {
     if (!window.confirm('ต้องการคืนข้อมูลตัวอย่างเริ่มต้นหรือไม่?')) return;
     try {
       const resetData = await resetRequests();
       setRequests(resetData);
       setStatusFilter('all');
+      setSearchQuery('');
       setNotice('คืนข้อมูลตัวอย่างเริ่มต้นแล้ว');
     } catch (error) {
       setNotice(error instanceof Error ? error.message : 'คืนข้อมูลไม่สำเร็จ');
@@ -103,9 +115,26 @@ function DashboardPage() {
           <SummaryPanel summary={summary} />
           <section className="panel" aria-labelledby="request-list-title">
             <div className="section-heading"><h2 id="request-list-title">รายการคำร้อง</h2><FilterBar value={statusFilter} onFilterChange={setStatusFilter} /></div>
-            {/* TODO B2: วางช่อง <input> ค้นหา ตรงนี้ (เหนือรายการ) แล้วกรองร่วมกับตัวกรองสถานะ */}
-            {/* TODO B3: เพิ่ม onMarkDone={handleMarkDone} และเขียน handleMarkDone ให้เรียก updateRequestStatus แล้ว setRequests เพื่อให้ summary อัปเดต + รอด refresh */}
-            <RequestList requests={filteredRequests} onDeleteRequest={handleDelete} />
+            
+            {/* TODO B2 / CP-B2.1: วางช่อง <input> ค้นหา ตรงนี้ (เหนือรายการ) แล้วกรองร่วมกับตัวกรองสถานะ */}
+            <div style={{ marginBottom: '1rem' }}>
+              <input
+                type="text"
+                placeholder="ค้นหาจากผู้แจ้งหรือรายละเอียด"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="input"
+                data-testid="search-input"
+              />
+            </div>
+
+            {/* CP-B2.4: หากค้นหาแล้วไม่เจอ ให้แสดงข้อความแจ้งเตือน */}
+            {filteredRequests.length === 0 ? (
+              <p className="subtle-empty" data-testid="search-empty-message">ไม่พบคำร้องที่ตรงกับการค้นหา</p>
+            ) : (
+              /* TODO B3: เพิ่ม onMarkDone={handleMarkDone} และเขียน handleMarkDone ให้เรียก updateRequestStatus แล้ว setRequests เพื่อให้ summary อัปเดต + รอด refresh */
+              <RequestList requests={filteredRequests} onDeleteRequest={handleDelete} />
+            )}
           </section>
         </>
       )}
