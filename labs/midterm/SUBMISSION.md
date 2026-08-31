@@ -27,7 +27,7 @@
 - [x] B4 `PriorityBadge` + ใช้ใน `RequestCard`
 - [x] `npm run build` ผ่าน
 - [x] `AI_USAGE.md` กรอกครบ
-- [ ] push branch `midterm` + ติด tag `midterm-submission-v1`
+- [x] push branch `midterm` + ติด tag `midterm-submission-v1`
 
 ---
 
