@@ -6,7 +6,8 @@ import LoadingState from '../components/LoadingState.jsx';
 import RequestList from '../components/RequestList.jsx';
 import SummaryPanel from '../components/SummaryPanel.jsx';
 import useManualReload from '../hooks/useManualReload.js';
-import { deleteRequest, getRequests, resetRequests } from '../services/requestService.js';
+// B3.2: เพิ่ม updateRequestStatus เข้ามาใน import
+import { deleteRequest, getRequests, resetRequests, updateRequestStatus } from '../services/requestService.js';
 
 function DashboardPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -81,6 +82,17 @@ function DashboardPage() {
     }
   }
 
+  // CP-B3.2 & CP-B3.3: อัปเดตสถานะคำร้องเป็น 'completed' บันทึกลง service/localStorage และอัปเดต state หน้าจอ
+  async function handleMarkDone(requestId) {
+    try {
+      const nextRequests = await updateRequestStatus(requestId, 'completed');
+      setRequests(nextRequests);
+      setNotice(`อัปเดตคำร้อง ${requestId} เป็นเสร็จสิ้นแล้ว`);
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : 'อัปเดตสถานะไม่สำเร็จ');
+    }
+  }
+
   // FIX บั๊ก 6: เติม await หน้า resetRequests() เพราะมันคืนค่าเป็น Promise
   async function handleReset() {
     if (!window.confirm('ต้องการคืนข้อมูลตัวอย่างเริ่มต้นหรือไม่?')) return;
@@ -132,8 +144,8 @@ function DashboardPage() {
             {filteredRequests.length === 0 ? (
               <p className="subtle-empty" data-testid="search-empty-message">ไม่พบคำร้องที่ตรงกับการค้นหา</p>
             ) : (
-              /* TODO B3: เพิ่ม onMarkDone={handleMarkDone} และเขียน handleMarkDone ให้เรียก updateRequestStatus แล้ว setRequests เพื่อให้ summary อัปเดต + รอด refresh */
-              <RequestList requests={filteredRequests} onDeleteRequest={handleDelete} />
+              /* CP-B3.2: ส่ง onMarkDone={handleMarkDone} ไปยัง RequestList */
+              <RequestList requests={filteredRequests} onDeleteRequest={handleDelete} onMarkDone={handleMarkDone} />
             )}
           </section>
         </>
