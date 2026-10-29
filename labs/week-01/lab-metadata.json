@@ -3,11 +3,11 @@
   "week": "week-01",
   "title": "Developer Environment & GitHub Repository Setup",
   "status": "submitted",
-  "originalRepoUrl": "https://github.com/Mssuwimon/engse203-lab01-68543210046-7",
-  "originalCommit": "849a70f2817bf98ba54ce5aa6c0312c3335c7a32",
-  "pullRequestUrl": "https://github.com/Mssuwimon/engse203-suwimon-labs-68543210046-7/pull/1",
+  "originalRepoUrl": "https://github.com/kamonwan-reanu/engse203-student-labs-68543210060-8",
+  "originalCommit": "",
+  "pullRequestUrl": "https://github.com/kamonwan-reanu/engse203-student-labs-68543210060-8/pull/1",
   "submissionTag": "lab-01-submission-v1",
   "testStatus": "pass",
-  "notes": "รัน hello.js ผ่าน Node.js สำเร็จ แสดงผล Hello Suwimon พร้อมข้อมูล OS และ Node version"
+  "notes": "รัน hello.js ผ่าน Node.js สำเร็จ แสดงผล Hello kamonwan Reanu (68543210060-8) พร้อมข้อมูล OS และ Node version"
 }
 

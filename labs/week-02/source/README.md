@@ -4,8 +4,8 @@
 
 ## Student Information
 
-- Student ID: `<68543210046-7>`
-- Name: `<Suwimon Chaidath>`
+- Student ID: `<68543210060-8>`
+- Name: `<Kamonwan Reanu>`
 - Operating system: `<macOS / Windows + WSL>`
 - GitHub Pages URL: `<add after deployment>`
 
