@@ -1,6 +1,6 @@
 const student = {
-  name: "Suwimon",
-  studentId: "68543210046-7",
+  name: "kamonwan Reanu",
+  studentId: "68543210060-8",
   os: process.platform,
   node: process.version,
 };
